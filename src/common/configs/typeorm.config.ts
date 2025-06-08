@@ -1,20 +1,23 @@
-import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
-import { ENV } from '../constant/env';
+import { Injectable } from '@nestjs/common';
+import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
+import { join } from 'path';
 
+@Injectable()
 export class TypeOrmConfig implements TypeOrmOptionsFactory {
-  createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
+  constructor(private readonly configService: ConfigService) {}
+
+  createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'mysql',
-      host: ENV.host,
-      username: ENV.username,
-      password: ENV.password,
-      database: ENV.database,
-      port: ENV.port,
+      host: this.configService.get('DB_HOST'),
+      port: parseInt(this.configService.get('DB_PORT'), 10) || 3306,
+      username: this.configService.get('DB_USERNAME'),
+      password: this.configService.get('DB_PASSWORD'),
+      database: this.configService.get('DB_NAME'),
+      entities: [join(__dirname, '../../../**/*.entity.{ts,js}')],
       synchronize: true,
-      entities: [
-        'dist/**/**/**/*.entity{.ts,.js}',
-        'dist/**/**/*.entity{.ts,.js}',
-      ],
+      logging: false,
     };
   }
 }

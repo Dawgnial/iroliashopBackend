@@ -3,9 +3,9 @@ import { AppModule } from './modules/app/app.module';
 import { config } from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
 import { InitializeSwagger } from './common/configs/swagger.config';
+import { ENV } from './common/constant/env';
 
 config();
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -14,10 +14,7 @@ async function bootstrap() {
   );
 
   InitializeSwagger(app);
-
-  const port = process.env.PORT || process.env.APP_PORT || 3000;
-  await app.listen(port);
-  console.log(`Docs: http://localhost:${port}/docs`);
+  await app.listen(process.env.APP_PORT);
+  console.log(`Docs : http://localhost:${ENV.App_Port}/docs`);
 }
-
 bootstrap();

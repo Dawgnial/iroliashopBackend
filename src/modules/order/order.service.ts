@@ -74,7 +74,7 @@ export class OrderService {
       };
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      throw new InternalServerErrorException((error as Error).message);
+      throw new InternalServerErrorException(error.message);
     } finally {
       await queryRunner.release();
     }

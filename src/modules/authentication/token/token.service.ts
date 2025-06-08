@@ -25,7 +25,7 @@ export class Tokenservice {
       });
       return paylod;
     } catch (error) {
-      throw new UnauthorizedException((error as Error).message);
+      throw new UnauthorizedException(error.message);
     }
   }
 }

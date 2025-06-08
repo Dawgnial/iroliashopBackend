@@ -50,7 +50,7 @@ export class InitializeAdmin {
 
       return;
     } catch (error) {
-      this.Logger.error((error as Error).message);
+      this.Logger.error(error.message);
     }
   }
 }

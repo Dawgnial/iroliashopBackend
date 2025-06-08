@@ -31,7 +31,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "multer": "^2.0.0",
+    "multer": "^2.0.1",
     "mysql2": "^3.14.0",
     "nestjs-paginate": "^12.5.0",
     "reflect-metadata": "^0.2.0",

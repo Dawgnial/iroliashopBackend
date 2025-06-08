@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    },
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

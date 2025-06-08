@@ -1,24 +1,21 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"]
-    },
     "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "baseUrl": "./",
+    "incremental": true,
     "skipLibCheck": true,
-    "types": ["node"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
-    "esModuleInterop": true,
-  },
-  "exclude": ["dist", "node_modules"]
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }

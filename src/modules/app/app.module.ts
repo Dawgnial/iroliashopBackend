@@ -2,7 +2,7 @@ import { Module, OnApplicationBootstrap } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfig } from 'src/common/configs/typeorm.confg';
+import { TypeOrmConfig } from 'src/common/configs/typeorm.config';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../authentication/auth.module';
 import { CategoryModule } from '../category/category.module';

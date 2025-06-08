@@ -15,7 +15,10 @@
     "rootDir": "./src",
     "skipLibCheck": true,
     "types": ["node"],
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "jsx": "react-jsx",
+    "lib": ["dom", "esnext"],
+    "esModuleInterop": true,
   },
   "exclude": ["dist", "node_modules"]
 }

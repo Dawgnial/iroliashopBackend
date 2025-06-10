@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from 'src/common/configs/typeorm.confg';
+import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../authentication/auth.module';
 import { CategoryModule } from '../category/category.module';
@@ -14,6 +15,12 @@ import { InitializeAdmin } from 'src/common/services/initialize-admin.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      useClass: TypeOrmConfig,
+    }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
     TypeOrmModule.forFeature([User]),
     UserModule,

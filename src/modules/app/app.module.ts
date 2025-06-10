@@ -21,7 +21,7 @@ import { InitializeAdmin } from 'src/common/services/initialize-admin.service';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfig,
     }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
+
     TypeOrmModule.forFeature([User]),
     UserModule,
     AuthModule,
@@ -35,6 +35,7 @@ import { InitializeAdmin } from 'src/common/services/initialize-admin.service';
 })
 export class AppModule implements OnApplicationBootstrap {
   constructor(private readonly InitializeService: InitializeAdmin) {}
+
   async onApplicationBootstrap() {
     await this.InitializeService.create();
   }

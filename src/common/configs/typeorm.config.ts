@@ -10,6 +10,8 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     console.log('DB_HOST:', this.configService.get('DB_HOST'));
     console.log('DB_PORT:', this.configService.get('DB_PORT'));
+    console.log('DB_USERNAME:', this.configService.get('DB_USERNAME'));
+    console.log('DB_PASSWORD:', this.configService.get('DB_PASSWORD'));
     console.log('DB_NAME:', this.configService.get('DB_NAME'));
 
     return {

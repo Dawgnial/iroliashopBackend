@@ -17,8 +17,8 @@ import { InitializeAdmin } from 'src/common/services/initialize-admin.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
-    }),    
+    }),
+
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfig,
     }),

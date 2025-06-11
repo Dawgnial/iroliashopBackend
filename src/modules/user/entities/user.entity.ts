@@ -1,12 +1,13 @@
 import { Base } from 'src/common/entity/base-entity';
+import { Entity } from 'typeorm'; // 👈 این import اضافه شد
 import { EntityNames } from 'src/common/enum/entityName';
 import { Role } from 'src/common/enum/role';
 import { Basket } from 'src/modules/Basket/entities/basket.entity';
 import { Order } from 'src/modules/order/entities/order.entity';
 import { Payment } from 'src/modules/payment/entities/payment.entity';
-import { Column, Entity, OneToMany, Unique } from 'typeorm';
+import { Column, OneToMany, Unique } from 'typeorm';
 
-@Entity(EntityNames.User)
+@Entity() // 👈 این دکوراتور بسیار مهمه
 @Unique(['email', 'phone'])
 export class User extends Base {
   @Column({ nullable: true })

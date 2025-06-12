@@ -7,9 +7,6 @@ import { User } from 'src/modules/user/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { AuthResponse } from './dto/auth-response.dto';
-import { config } from 'dotenv';
-
-config(); // برای بارگذاری env
 
 @Injectable()
 export class AuthService {
@@ -19,10 +16,17 @@ export class AuthService {
   ) {}
 
   private generateToken(user: User): string {
+    const secret = process.env.JWT_SECRET;
+    const expiresIn = process.env.JWT_EXPIRE || '1h';
+
+    if (!secret) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+
     return jwt.sign(
       { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRE },
+      secret,
+      { expiresIn },
     );
   }
 

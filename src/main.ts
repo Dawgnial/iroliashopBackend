@@ -17,8 +17,10 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://www.iroliashop.ir',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
+  
 
   // Pipe برای validation ورودی‌ها
   app.useGlobalPipes(

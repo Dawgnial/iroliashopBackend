@@ -20,19 +20,24 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
-  
 
-  // Pipe برای validation ورودی‌ها
+  // Pipe برای validation ورودی‌ها با transform فعال
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
   );
 
   // فعال‌سازی Swagger
   InitializeSwagger(app);
 
   // اجرا
-  await app.listen(process.env.APP_PORT);
-  console.log(`Docs : http://localhost:${ENV.App_Port}/docs`);
+  const port = process.env.APP_PORT || ENV.App_Port || 3000;
+  await app.listen(port);
+
+  console.log(`Docs : http://localhost:${port}/docs`);
 }
 
 bootstrap();

@@ -1,6 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 import { Tokenservice } from './token/token.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { Role } from 'src/common/enum/role';
@@ -15,37 +21,49 @@ export class AuthService {
     private readonly tokenService: Tokenservice,
   ) {}
 
-  async login(data: RegisterDto) {
-    let { email, name, password } = data;
+  async register(data: RegisterDto): Promise<{ accessToken: string }> {
+    const { email, name, password } = data;
 
-    const user: DeepPartial<User> =
+    const userExists: DeepPartial<User> =
       await this.userService.getUserByEmail(email);
-
-    if (user) {
-      const AccessToken = await this.tokenService.createAccessToken({
-        id: user.id,
-        role: Role.USER,
-      });
-
-      return {
-        accessToken: AccessToken,
-      };
+    if (userExists) {
+      throw new BadRequestException('User already exists');
     }
 
-    password = await Hash(password);
+    const hashedPassword = await Hash(password);
     const newUser = await this.userService.createUser({
       name: name || null,
       email,
-      password,
+      password: hashedPassword,
     } as CreateUserDto);
 
-    const AccessToken = await this.tokenService.createAccessToken({
+    const accessToken = await this.tokenService.createAccessToken({
       id: newUser.id,
       role: Role.USER,
     });
 
-    return {
-      accessToken: AccessToken,
-    };
+    return { accessToken };
+  }
+
+  async login(data: LoginDto): Promise<{ accessToken: string }> {
+    const { email, password } = data;
+
+    const user: DeepPartial<User> =
+      await this.userService.getUserByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const accessToken = await this.tokenService.createAccessToken({
+      id: user.id,
+      role: Role.USER,
+    });
+
+    return { accessToken };
   }
 }

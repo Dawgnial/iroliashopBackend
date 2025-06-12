@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength, IsOptional } from 'class-validator';
+import { IsEmail, IsNotEmpty, MinLength, IsOptional, IsPhoneNumber } from 'class-validator';
 
 export class RegisterDto {
   @IsEmail()
@@ -11,4 +11,8 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(6)
   password: string;
+
+  @IsOptional()
+  @IsPhoneNumber(null)  // null یعنی هر کشور پذیرفته میشه، می‌تونی 'IR' هم بزنی
+  phone?: string;
 }
